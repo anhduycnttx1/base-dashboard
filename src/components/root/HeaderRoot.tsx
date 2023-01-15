@@ -1,15 +1,11 @@
+import { Flex, Group, Header, Container, Avatar, Menu, Image, Text, Title } from '@mantine/core'
 import {
-  Flex,
-  Group,
-  Header,
-  Text,
-  Container,
-  Button,
-  Avatar,
-  HoverCard,
-  Stack,
-} from '@mantine/core'
-import { IconLogout } from '@tabler/icons'
+  IconArrowsLeftRight,
+  IconLogout,
+  IconMessageCircle,
+  IconPhoto,
+  IconSettings,
+} from '@tabler/icons'
 import avatarDefault from '../../assets/user.png'
 import React from 'react'
 import { useAuthController } from '../../controllers/auth'
@@ -20,9 +16,19 @@ const HeaderRoot = () => {
   const heightHeader = 40
   return (
     <Header height={heightHeader}>
-      <Container h={heightHeader}>
+      <Container h={heightHeader} fluid>
         <Flex justify="space-between" h={heightHeader}>
-          <Group>LOGO</Group>
+          <Group spacing="xs">
+            {/* Add logo application */}
+            <Avatar
+              size="sm"
+              src="https://cdn-icons-png.flaticon.com/512/9030/9030959.png"
+              alt="logo"
+            />
+            <Title size={20} color="gray">
+              Myapp
+            </Title>
+          </Group>
           <Group>
             <PopoverUser logOut={logOut} state={state}>
               <Avatar src={avatarUser} alt="avatar user" size="sm" />
@@ -41,29 +47,31 @@ type PopoverUserProps = {
   logOut: any
   state: any
 }
+
 function PopoverUser({ children, logOut, state }: PopoverUserProps) {
   return (
-    <HoverCard shadow="md">
-      <HoverCard.Target>{children}</HoverCard.Target>
-      <HoverCard.Dropdown>
-        <Stack>
-          <Flex>
-            <Text fz="sm" fw={600} ml={4} color="gray">
-              {state?.user?.email}
-            </Text>
-          </Flex>
-          <Button
-            onClick={() => logOut()}
-            type="button"
-            color="gray"
-            variant="subtle"
-            compact
-            rightIcon={<IconLogout size={16} />}
-          >
-            Logout
-          </Button>
-        </Stack>
-      </HoverCard.Dropdown>
-    </HoverCard>
+    <Menu trigger="hover" position="bottom" shadow="md" width={200}>
+      <Menu.Target>{children}</Menu.Target>
+
+      <Menu.Dropdown>
+        <Menu.Label>Application</Menu.Label>
+        <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
+        <Menu.Item icon={<IconMessageCircle size={14} />}>Messages</Menu.Item>
+        <Menu.Item icon={<IconPhoto size={14} />}>Gallery</Menu.Item>
+
+        <Menu.Divider />
+
+        <Menu.Label>Danger zone</Menu.Label>
+        <Menu.Item icon={<IconArrowsLeftRight size={14} />}>Transfer my data</Menu.Item>
+        <Menu.Item
+          onClick={() => logOut()}
+          type="button"
+          color="cyan"
+          icon={<IconLogout size={14} />}
+        >
+          Logout account
+        </Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
   )
 }

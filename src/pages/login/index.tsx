@@ -1,16 +1,5 @@
-import React from 'react'
 import { useForm } from '@mantine/form'
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  Flex,
-  Group,
-  PasswordInput,
-  Text,
-  TextInput,
-} from '@mantine/core'
+import { Box, Button, Container, Flex, Group, PasswordInput, Text, TextInput } from '@mantine/core'
 import { useAuthController } from '../../controllers/auth'
 import LoaderPage from '../../components/loader/Loader'
 import { Link, Navigate } from 'react-router-dom'
@@ -27,8 +16,8 @@ const LoginPage = () => {
   const { loading, user } = state
   const form = useForm({
     initialValues: {
-      email: '',
-      password: '',
+      email: 'admin@test.com',
+      password: 'abcd1234',
     },
 
     validate: {
@@ -61,7 +50,9 @@ const LoginPage = () => {
                 />
 
                 <Group position="right" mt="md">
-                  <Button type="submit">Login</Button>
+                  <Button type="submit" color="cyan">
+                    Login
+                  </Button>
                 </Group>
                 <Group position="center" mt="md">
                   <Text fz="xs">

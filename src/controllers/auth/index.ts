@@ -1,5 +1,6 @@
 import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import type { RootState } from '../../redux/store'
+import { toast } from 'react-toastify'
 import { setLoading, setError, setUser } from '../../redux/features/auth/authSlice'
 import { auth } from '../../firebase/firebase-config'
 import {
@@ -20,19 +21,19 @@ export function useAuthController() {
       await createUserWithEmailAndPassword(auth, email, password)
       dispatch(setLoading(false))
     } catch (err) {
-      console.log(err)
-      dispatch(setError('error'))
+      dispatch(setError('Error Register'))
     }
   }
 
-  async function signIn(email: string, password: string) {
+  function signIn(email: string, password: string) {
     try {
       dispatch(setLoading(true))
-      await signInWithEmailAndPassword(auth, email, password)
-      dispatch(setLoading(false))
+      signInWithEmailAndPassword(auth, email, password)
+        .then((_) => toast.success('Login success!'))
+        .catch((_) => toast.error('Email/password you entered is incorrect!'))
+        .finally(() => dispatch(setLoading(false)))
     } catch (err) {
-      console.log(err)
-      dispatch(setError('error'))
+      dispatch(setError('Error Login'))
     }
   }
 
@@ -42,8 +43,7 @@ export function useAuthController() {
       await signOut(auth)
       dispatch(setLoading(false))
     } catch (err) {
-      console.log(err)
-      dispatch(setError('error'))
+      dispatch(setError('Error Logout'))
     }
   }
 
