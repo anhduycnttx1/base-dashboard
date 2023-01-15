@@ -1,5 +1,4 @@
-# Getting Started 
-
+# Getting Started
 
 ## Available Scripts
 
